@@ -16,3 +16,20 @@
 >```
 > There's still a lot of prop drilling going on from app to TodoList --> TodoItems
 > and other places. 
+>
+## useContext:
+> First need to change store.ts to store.tsx --> will probably break the build, so restart the server --> yarn start 
+> To prevent this error:<br/> 
+> 'React' refers to a UMD global, but the current file is a module. Consider adding an import instead.ts(2686)<br/>
+> Do:<br/>
+> import * as React from 'react' --> then React.useContext, React.useState etc. 
+>```
+> // Context:
+>
+> const TodosContext = React.createContext<UseTodosType | null>(null);
+>
+> export const useTodosContext = () => React.useContext(TodosContext)!;
+>```
+>Notice the exclamation point at the end of useTodosContext's return. 
+> Since we know that there will always be something at runtime, the exclamation coerces the TodoContext so that it doesn't always
+> have to go checking for null. Video timestamp: 17:00
