@@ -123,3 +123,121 @@
 >```
 
 >## Adding the To Do App's Functions to the Context:
+>```
+> // Native React Types
+> 
+> // BEFORE:
+> // export const useTodos = (initial: Todo[]) => useState<Todo[]>(initial)
+>
+> // AFTER: 
+> export const useTodos = (initial: Todo[]) => {
+>   const [todos, todosSet] = React.useState<Todo[]>(initial)
+>   const [newTodo, newTodoSet] = React.useState("")
+> 
+>   return {
+>     todos,
+>     newTodo,
+>     newTodoSet,
+>     addTodo(){
+>       todosSet(tdlist => addTodo(tdlist, newTodo))
+>     },
+>     updateTodo(id: number, text: string){
+>       todosSet(tdlist => updateTodo(tdlist, id, text))
+>     },
+>     toggleTodo(id: number){
+>       todosSet(tdlist => toggleTodo(tdlist, id))
+>     },
+>     removeTodo(id: number){
+>       todosSet(tdlist => removeTodo(tdlist, id))
+>     },
+>     load(inTodos: Todo[]){
+>       todosSet(inTodos)
+>     }
+>   }
+> }
+> 
+>```
+>```
+> BEFORE: 
+> import { removeTodo, toggleTodo, updateTodo, useTodosContext } >from '../store'
+> 
+> function TodoListItems() {
+> 
+>   const [ todos, todosSet ] = useTodosContext()
+> 
+>   return (
+>     <>
+>       {todos.map((todo: { id: number; text: string }) => (
+>         <Flex pt={2} key={todo.id}>
+>           <Checkbox 
+>           onChange={() => todosSet(toggleTodo(todos, todo.id))}
+>           />
+>           <Input 
+>           onChange={(evt) => todosSet(updateTodo(todos, todo.id, >evt.target.value))}
+>           mx={2} value={todo.text} />
+>           <Button 
+>           onClick={() => todosSet(removeTodo(todos, todo.id))}
+>           >Delete</Button>
+>         </Flex>
+>       ))}
+>     </>
+>   );
+> }
+> 
+> function TodoList() {
+>   return (
+>     <>
+>       <Heading>Todo List</Heading>
+>       <TodoListItems />
+>     </>
+>   );
+> }
+> 
+> export default TodoList;
+> 
+>======================================================================================
+> 
+> AFTER:
+> 
+> import { useTodosContext } from '../store'
+> 
+> function TodoListItems() {
+> 
+>   const { todos, toggleTodo, updateTodo, removeTodo } = useTodosContext()
+> 
+>   return (
+>     <>
+>       {todos.map((todo: { id: number; text: string }) => (
+>         <Flex pt={2} key={todo.id}>
+>           <Checkbox 
+>             onChange={() => toggleTodo(todo.id)}
+>           />
+>           <Input 
+>             onChange={(evt) => updateTodo(todo.id, evt.target.value)}
+>             mx={2} value={todo.text} 
+>           />
+>           <Button 
+>             onClick={() => removeTodo(todo.id)}
+>           >
+>             Delete
+>           </Button>
+>         </Flex>
+>       ))}
+>     </>
+>   );
+> }
+> 
+> function TodoList() {
+>   return (
+>     <>
+>       <Heading>Todo List</Heading>
+>       <TodoListItems />
+>     </>
+>   );
+> }
+> 
+> export default TodoList;
+> 
+> 
+> 
+>```
