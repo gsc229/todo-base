@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 // Standard interface and functions
 export interface Todo {
   id: number;
