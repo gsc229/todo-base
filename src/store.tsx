@@ -32,12 +32,9 @@ export const addTodo = (todos: Todo[], text: string): Todo[] => [
 
 // Native React Types
 export const useTodos = (initial: Todo[]) => React.useState<Todo[]>(initial)
-export type UseTodosType = ReturnType<typeof useTodos>
-export type TodosType = UseTodosType[0]
-export type SetTodosType = UseTodosType[1]
+type UseTodosType = ReturnType<typeof useTodos>
 
 // Context:
-
 const TodosContext = React.createContext<UseTodosType | null>(null);
 
 export const useTodosContext = () => React.useContext(TodosContext)!;
