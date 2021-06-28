@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import * as React from 'react'
 // Standard interface and functions
 export interface Todo {
   id: number;
@@ -31,7 +31,16 @@ export const addTodo = (todos: Todo[], text: string): Todo[] => [
 ];
 
 // Native React Types
-export const useTodos = (initial: Todo[]) => useState<Todo[]>(initial)
-export type UseTodosType = ReturnType<typeof useTodos>
-export type TodosType = UseTodosType[0]
-export type SetTodosType = UseTodosType[1]
+export const useTodos = (initial: Todo[]) => React.useState<Todo[]>(initial)
+type UseTodosType = ReturnType<typeof useTodos>
+
+// Context:
+const TodosContext = React.createContext<UseTodosType | null>(null);
+
+export const useTodosContext = () => React.useContext(TodosContext)!;
+
+export const TodosProvider = ({ children }: { children: React.ReactNode }) => (
+  <TodosContext.Provider value={ useTodos([]) }>
+    { children }
+  </TodosContext.Provider>
+)
