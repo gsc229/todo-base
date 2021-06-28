@@ -9,12 +9,12 @@ JSON source: https://raw.githubusercontent.com/jherr/todos-four-ways/master/data
 
 function TopBar() {
 
-  const [, todosSet] = useTodosContext()
+  const { load } = useTodosContext()
 
   const onLoad = () => {
     fetch('https://raw.githubusercontent.com/jherr/todos-four-ways/master/data/todos.json')
     .then(resp => resp.json())
-    .then(data => todosSet(data))
+    .then(data => load(data))
   }
 
   return (

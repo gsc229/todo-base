@@ -3,7 +3,7 @@ import { ChakraProvider, Box, theme } from "@chakra-ui/react";
 import TopBar from "./components/TopBar";
 import TodoList from "./components/TodoList";
 import TodoAdd from "./components/TodoAdd";
-import { TodosProvider } from './store'
+import { TodosProvider, useTodosContext  } from './store'
 
 export function App() {
 
@@ -15,9 +15,6 @@ export function App() {
           <TodoList />
           <TodoAdd />
         </Box>
-        {/* <pre>
-          {JSON.stringify(todos, null, 2)}
-        </pre> */}
       </TodosProvider>
     </ChakraProvider>
   );
