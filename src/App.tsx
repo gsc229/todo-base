@@ -3,7 +3,7 @@ import { ChakraProvider, Box, theme } from "@chakra-ui/react";
 import TopBar from "./components/TopBar";
 import TodoList from "./components/TodoList";
 import TodoAdd from "./components/TodoAdd";
-import { TodosProvider, useTodosContext  } from './store'
+import { TodosProvider  } from './store'
 
 export function App() {
 
